@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #E0E0E0;
+            --accent-color: #BB86FC;
+            --secondary-bg: #1E1E1E;
+            --button-color: #2C2C2C;
+            --spacing: 25px;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--bg-color), #1F1B24);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: var(--spacing);
+            box-sizing: border-box;
+        }
+        .notes-container {
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            padding: var(--spacing);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+        .title {
+            font-size: 2em;
+            margin-bottom: var(--spacing);
+            text-align: center;
+        }
+        #note-input {
+            width: 100%;
+            height: 120px;
+            background: var(--bg-color);
+            border: 1px solid var(--accent-color);
+            border-radius: 10px;
+            color: var(--text-color);
+            padding: 15px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            resize: none;
+            outline: none;
+            transition: border-color 0.3s ease;
+            box-sizing: border-box;
+        }
+        #note-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(187, 134, 252, 0.5);
+        }
+        #note-input::placeholder {
+            color: #888;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        .button {
+            background: linear-gradient(135deg, var(--button-color), #3D3D3D);
+            border: none;
+            color: var(--text-color);
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: linear-gradient(135deg, var(--accent-color), #9F67E3);
+        }
+        #notes-list {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .note-item {
+            background: var(--bg-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+        .back-button {
+            background: linear-gradient(135deg, var(--button-color), #3D3D3D);
+            border: none;
+            color: var(--text-color);
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: var(--spacing);
+            display: inline-block;
+        }
+        .back-button:hover {
+            background: linear-gradient(135deg, var(--accent-color), #9F67E3);
+        }
+
+        @media (max-width: 600px) {
+            :root {
+                --spacing: 15px;
+            }
+            body {
+                padding: var(--spacing);
+            }
+            .notes-container {
+                padding: var(--spacing);
+            }
+            .title {
+                font-size: 1.5em;
+            }
+            #note-input {
+                height: 100px;
+            }
+            .button {
+                padding: 8px 16px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notes-container">
+        <h1 class="title">Notas</h1>
+        <textarea id="note-input" placeholder="escreve aqui..."></textarea>
+        <div class="button-container">
+            <button id="add-note" class="button">Adicionar Nota</button>
+        </div>
+        <div id="notes-list"></div>
+    </div>
+    <a href="index.html" class="back-button"><</a>
+
+    <script>
+        const noteInput = document.getElementById('note-input');
+        const addNoteButton = document.getElementById('add-note');
+        const notesList = document.getElementById('notes-list');
+
+        addNoteButton.addEventListener('click', () => {
+            const noteText = noteInput.value.trim();
+            if (noteText) {
+                const noteElement = document.createElement('div');
+                noteElement.classList.add('note-item');
+                noteElement.textContent = noteText;
+                notesList.prepend(noteElement);
+                noteInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
