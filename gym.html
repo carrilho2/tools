@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Discos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0a0a0a;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .calculator {
+            background-color: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 450px;
+            border: 1px solid #333;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        .disco {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            padding: 15px;
+            background-color: #252525;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: 1px solid #333;
+        }
+
+        .disco:hover {
+            background-color: #2d2d2d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .peso {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 500;
+            flex-grow: 1;
+            margin-right: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input {
+            width: 60px;
+            padding: 10px;
+            background-color: #333;
+            border: 1px solid #444;
+            color: white;
+            border-radius: 8px;
+            font-size: 1.2em;
+            text-align: center;
+            transition: all 0.3s ease;
+            -moz-appearance: textfield;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #666;
+            background-color: #3a3a3a;
+        }
+
+        input::-webkit-inner-spin-button,
+        input::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .btn {
+            background-color: #444;
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #555;
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        #total {
+            font-size: 2em;
+            margin-top: 25px;
+            padding: 20px;
+            background: linear-gradient(45deg, #444, #333);
+            color: white;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            border: 1px solid #555;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Calculadora de Discos</h1>
+        
+        <div id="calculadora">
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">1 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">1.5 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">2 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+             <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">2.5 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">5 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">10 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">15 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">20 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">25 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+            
+            <div class="disco">
+                <div class="disco-icon"></div>
+                <span class="peso">50 kg</span>
+                <div class="input-group">
+                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
+                    <input type="number" min="0" value="0" onchange="calcularTotal()">
+                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="total">
+            Total: 0 kg
+        </div>
+    </div>
+
+    <script>
+        function alterarQuantidade(btn, delta) {
+            const input = btn.parentElement.querySelector('input');
+            const novoValor = Number(input.value) + delta;
+            if (novoValor >= 0) {
+                input.value = novoValor;
+                calcularTotal();
+            }
+        }
+
+        function calcularTotal() {
+            const pesos = [1, 1.5, 2, 2.5, 5, 10, 15, 20, 25, 50];
+            const inputs = document.querySelectorAll('input');
+            let total = 0;
+
+            inputs.forEach((input, index) => {
+                total += pesos[index] * Number(input.value);
+            });
+
+            document.getElementById('total').innerHTML = `Total: ${total} kg`;
+        }
+    </script>
+</body>
+</html>
