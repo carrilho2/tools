@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Ferramentas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #E0E0E0;
+            --accent-color: #BB86FC;
+            --secondary-bg: #1E1E1E;
+            --button-color: #2C2C2C;
+            --spacing: 25px;
+        }
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--bg-color), #1F1B24);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: var(--spacing);
+            box-sizing: border-box;
+        }
+        .title {
+            font-size: 2.5em;
+            margin-bottom: var(--spacing);
+            text-align: center;
+        }
+        .tools-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+        .tool-button {
+            background: linear-gradient(135deg, var(--button-color), #3D3D3D);
+            border: none;
+            color: var(--text-color);
+            padding: 20px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tool-button:hover {
+            background: linear-gradient(135deg, var(--accent-color), #9F67E3);
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1 class="title">Ferramentas</h1>
+    <div class="tools-list">
+        <a href="notas.html" class="tool-button">Notas</a>
+        <a href="calculadora.html" class="tool-button">Calculadora</a>
+        <a href="cientifica.html" class="tool-button">Calc. Científica</a>
+        <a href="grafica.html" class="tool-button">Calc. Gráfica</a>
+    </div>
+</body>
+</html>
