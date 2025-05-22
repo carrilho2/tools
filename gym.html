@@ -1,264 +1,389 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Discos</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Discos</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0a0a0a;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        * {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
         }
 
-        .calculator {
-            background-color: #1a1a1a;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            width: 450px;
-            border: 1px solid #333;
-            max-height: 90vh;
-            overflow-y: auto;
+        body {
+            background: linear-gradient(135deg, #121212, #1a1a1a);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 16px;
         }
 
-        h1 {
-            text-align: center;
+        .header {
+            margin-bottom: 32px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            padding: 8px;
+            background: linear-gradient(145deg, #1a1a1a, #222);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn {
             color: #fff;
-            margin-bottom: 30px;
-            font-size: 1.8em;
-            font-weight: 600;
-        }
-
-        .disco {
+            text-decoration: none;
+            font-size: 24px;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
             display: flex;
             align-items: center;
-            margin: 12px 0;
-            padding: 15px;
-            background-color: #252525;
+            justify-content: center;
             border-radius: 12px;
+            background: linear-gradient(145deg, #222, #2a2a2a);
+        }
+
+        .back-btn:hover {
+            opacity: 1;
+            transform: translateX(-2px);
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(45deg, #ffffff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .disc-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background: linear-gradient(145deg, #1a1a1a, #222);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            border: 1px solid #333;
         }
 
-        .disco:hover {
-            background-color: #2d2d2d;
+        .disc-row:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
         }
 
-        .peso {
-            color: #fff;
-            font-size: 1.2em;
-            font-weight: 500;
-            flex-grow: 1;
-            margin-right: 15px;
+        .disc-weight {
+            font-size: 20px;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ffffff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        .input-group {
+        .controls-wrapper {
             display: flex;
             align-items: center;
             gap: 8px;
+            background: linear-gradient(145deg, #222, #2a2a2a);
+            padding: 6px;
+            border-radius: 12px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        input {
-            width: 60px;
-            padding: 10px;
-            background-color: #333;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 8px;
-            font-size: 1.2em;
-            text-align: center;
-            transition: all 0.3s ease;
-            -moz-appearance: textfield;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #666;
-            background-color: #3a3a3a;
-        }
-
-        input::-webkit-inner-spin-button,
-        input::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .btn {
-            background-color: #444;
-            border: none;
-            color: white;
+        .control-btn {
             width: 32px;
             height: 32px;
-            border-radius: 6px;
-            cursor: pointer;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(145deg, #2a2a2a, #333);
+            color: white;
+            font-size: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3em;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
-        .btn:hover {
-            background-color: #555;
+        .control-btn.minus {
+            color: #ff6b6b;
         }
 
-        .btn:active {
-            transform: scale(0.95);
+        .control-btn.plus {
+            color: #4ecdc4;
         }
 
-        #total {
-            font-size: 2em;
-            margin-top: 25px;
-            padding: 20px;
-            background: linear-gradient(45deg, #444, #333);
-            color: white;
-            border-radius: 12px;
+        .control-btn:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(145deg, #333, #3a3a3a);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+            background: linear-gradient(145deg, #222, #2a2a2a);
+        }
+
+        .disc-count {
+            min-width: 32px;
             text-align: center;
             font-weight: 600;
-            border: 1px solid #555;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .toggle-section {
+            margin: 24px 0;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 16px;
+            background: linear-gradient(145deg, #1a1a1a, #222);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(145deg, #222, #2a2a2a);
+            transition: 0.4s;
+            border-radius: 34px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        input:checked + .toggle-slider {
+            background: linear-gradient(45deg, #ffffff, #1b1b1b);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Opcional: efeito hover */
+        .toggle-slider:hover {
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .toggle-slider:hover:before {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .total-section {
+            margin-top: 32px;
+            padding: 24px;
+            background: linear-gradient(145deg, #1a1a1a, #222);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 8px 0;
+        }
+
+        .total-final {
+            display: flex;
+            justify-content: space-between;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(45deg, #ffffff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Elemento vazio para balancear o grid */
+        .header-spacer {
+            width: 24px;
         }
     </style>
 </head>
 <body>
-    <div class="calculator">
-        <h1>Calculadora de Discos</h1>
-        
-        <div id="calculadora">
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">1 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-            
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">1.5 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-            
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">2 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-             <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">2.5 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">5 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-            
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">10 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-            
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">15 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-            
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">20 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">25 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-            
-            <div class="disco">
-                <div class="disco-icon"></div>
-                <span class="peso">50 kg</span>
-                <div class="input-group">
-                    <button class="btn" onclick="alterarQuantidade(this, -1)">-</button>
-                    <input type="number" min="0" value="0" onchange="calcularTotal()">
-                    <button class="btn" onclick="alterarQuantidade(this, 1)">+</button>
-                </div>
-            </div>
-        </div>
+    <header class="header">
+        <a href="index.html" class="back-btn">←</a>
+        <h1>Calculadora</h1>
+        <div class="header-spacer"></div>
+    </header>
 
-        <div id="total">
-            Total: 0 kg
+    <div id="discs-container"></div>
+
+    <div class="toggle-section">
+        <span>Barra 20kg</span>
+        <label class="toggle-switch">
+            <input type="checkbox" id="modeToggle">
+            <span class="toggle-slider"></span>
+        </label>
+    </div>
+
+    <div class="total-section">
+        <div class="total-row" id="bar-row">
+            <span>Barra</span>
+            <span>20kg</span>
+        </div>
+        <div class="total-row">
+            <span>Discos</span>
+            <span id="discs-weight">0kg</span>
+        </div>
+        <div class="total-final">
+            <span>Total</span>
+            <span id="total-weight">20kg</span>
         </div>
     </div>
 
     <script>
-        function alterarQuantidade(btn, delta) {
-            const input = btn.parentElement.querySelector('input');
-            const novoValor = Number(input.value) + delta;
-            if (novoValor >= 0) {
-                input.value = novoValor;
-                calcularTotal();
+        let discos = [
+            { peso: 25, quantidade: 0 },
+            { peso: 20, quantidade: 0 },
+            { peso: 15, quantidade: 0 },
+            { peso: 10, quantidade: 0 },
+            { peso: 5, quantidade: 0 },
+            { peso: 2.5, quantidade: 0 },
+            { peso: 2, quantidade: 0 },
+            { peso: 1.5, quantidade: 0 },
+            { peso: 1.25, quantidade: 0 },
+            { peso: 1, quantidade: 0 }
+        ];
+
+        let isBarMode = false;
+        let barWeight = 20; // Peso da barra
+
+        function aumentar(index) {
+            discos[index].quantidade++;
+            atualizarInterface();
+        }
+
+        function diminuir(index) {
+            if (discos[index].quantidade > 0) {
+                discos[index].quantidade--;
+                atualizarInterface();
             }
         }
 
         function calcularTotal() {
-            const pesos = [1, 1.5, 2, 2.5, 5, 10, 15, 20, 25, 50];
-            const inputs = document.querySelectorAll('input');
-            let total = 0;
-
-            inputs.forEach((input, index) => {
-                total += pesos[index] * Number(input.value);
-            });
-
-            document.getElementById('total').innerHTML = `Total: ${total} kg`;
+            const pesoBarra = document.getElementById('modeToggle').checked ? 20 : 0;
+            const pesoDiscos = discos.reduce((total, disco) => 
+                total + (disco.peso * disco.quantidade), 0);
+            return { pesoBarra, pesoDiscos, total: pesoBarra + pesoDiscos };
         }
+
+        function atualizarInterface() {
+            const container = document.getElementById('discs-container');
+            container.innerHTML = discos.map((disco, index) => `
+                <div class="disc-row">
+                    <span class="disc-weight" data-weight="${disco.peso}">${disco.peso}kg</span>
+                    <div class="controls-wrapper">
+                        <button class="control-btn minus" onclick="diminuir(${index})">-</button>
+                        <span class="disc-count">${disco.quantidade}</span>
+                        <button class="control-btn plus" onclick="aumentar(${index})">+</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const { pesoBarra, pesoDiscos, total } = calcularTotal();
+            const barRow = document.getElementById('bar-row');
+            barRow.style.display = pesoBarra ? 'flex' : 'none';
+            document.getElementById('discs-weight').textContent = pesoDiscos + 'kg';
+            document.getElementById('total-weight').textContent = total + 'kg';
+        }
+
+        function setupToggle() {
+            const toggle = document.getElementById('modeToggle');
+            
+            toggle.addEventListener('change', function() {
+                isBarMode = this.checked;
+                
+                // Atualiza imediatamente o total baseado no estado do toggle
+                if (isBarMode) {
+                    // Adiciona o peso da barra quando ativado
+                    addBarWeight();
+                } else {
+                    // Remove o peso da barra quando desativado
+                    removeBarWeight();
+                }
+                
+                updateTotals();
+            });
+        }
+
+        function addBarWeight() {
+            const totalElement = document.getElementById('totalWeight');
+            const currentTotal = parseInt(totalElement.textContent);
+            totalElement.textContent = `${currentTotal + barWeight}kg`;
+        }
+
+        function removeBarWeight() {
+            const totalElement = document.getElementById('totalWeight');
+            const currentTotal = parseInt(totalElement.textContent);
+            totalElement.textContent = `${currentTotal - barWeight}kg`;
+        }
+
+        function updateTotals() {
+            let totalWeight = 0;
+            const counts = discos.map(disco => disco.quantidade);
+            const subtotal = counts.reduce((a, b) => a + b, 0);
+            
+            if (isBarMode) {
+                totalWeight = subtotal + barWeight;
+            } else {
+                totalWeight = subtotal;
+            }
+            
+            document.getElementById('subtotalWeight').textContent = `${subtotal}kg`;
+            document.getElementById('totalWeight').textContent = `${totalWeight}kg`;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            setupToggle();
+            updateTotals(); // Inicializa os totais
+            // ... resto do seu código de inicialização
+        });
+
+        // Inicializar
+        atualizarInterface();
     </script>
 </body>
 </html>
